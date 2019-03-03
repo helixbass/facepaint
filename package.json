@@ -113,5 +113,8 @@
       "^emotion-theming$": "<rootDir>/packages/facepaint/src"
     },
     "setupTestFrameworkScriptFile": "<rootDir>/test/setup.js"
+  },
+  "dependencies": {
+    "lodash": "^4.17.11"
   }
 }
