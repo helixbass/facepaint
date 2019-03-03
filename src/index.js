@@ -8,17 +8,13 @@ export default function(
   const mq = Object.assign({[defaultKey]: '&'}, breakpoints)
 
   function flatten(obj) {
-    console.log({obj})
-    console.log('a')
     if (typeof obj !== 'object' || obj == null) {
       return []
     }
 
-    console.log('b')
     if (Array.isArray(obj)) {
       return obj.map(flatten)
     }
-    console.log('c')
 
     const slots = {}
     const objects = {}
@@ -68,7 +64,6 @@ export default function(
       }
     })
     Object.assign(props, objects)
-    console.log({props})
     return props
   }
 

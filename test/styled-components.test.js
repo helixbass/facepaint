@@ -5,16 +5,23 @@ import styled from 'styled-components'
 
 import facepaint from '../src/index'
 
-const mq = facepaint([
-  '@media(min-width: 420px)',
-  '@media(min-width: 920px)',
-  '@media(min-width: 1120px)'
-])
+const mq = facepaint({
+  first: '@media(min-width: 420px)',
+  second: '@media(min-width: 920px)',
+  third: '@media(min-width: 1120px)',
+})
 
 describe('facepaint', () => {
   test('basic', () => {
     const Div = styled('div')`
-      ${mq({ color: ['red', 'green', 'blue', 'darkorchid'] })};
+      ${mq({
+        color: {
+          default: 'red',
+          first: 'green',
+          second: 'blue',
+          third: 'darkorchid',
+        },
+      })};
     `
     const tree = renderer.create(<Div>Basic</Div>).toJSON()
     expect(tree).toMatchSnapshot()
@@ -22,7 +29,7 @@ describe('facepaint', () => {
 
   test('holes', () => {
     const Div = styled('div')`
-      ${mq({ color: ['red', , 'blue', 'darkorchid'] })};
+      ${mq({color: {default: 'red', second: 'blue', third: 'darkorchid'}})};
     `
     const tree = renderer.create(<Div>Holes</Div>).toJSON()
     expect(tree).toMatchSnapshot()
@@ -31,10 +38,20 @@ describe('facepaint', () => {
   test('multiple', () => {
     const Div = styled('div')`
       ${mq({
-        color: ['red', 'green', 'blue', 'darkorchid'],
-        display: ['flex', 'block', 'inline-block', 'table'],
+        color: {
+          default: 'red',
+          first: 'green',
+          second: 'blue',
+          third: 'darkorchid',
+        },
+        display: {
+          default: 'flex',
+          first: 'block',
+          second: 'inline-block',
+          third: 'table',
+        },
         fontSize: '12px',
-        alignItems: 'center'
+        alignItems: 'center',
       })};
     `
     const tree = renderer.create(<Div>Multiple</Div>).toJSON()
@@ -46,13 +63,23 @@ describe('facepaint', () => {
       ${mq({
         backgroundColor: 'hotpink',
         textAlign: 'center',
-        width: ['25%', '50%', '75%', '100%'],
+        width: {default: '25%', first: '50%', second: '75%', third: '100%'},
         '& .foo': {
-          color: ['red', 'green', 'blue', 'darkorchid'],
+          color: {
+            default: 'red',
+            first: 'green',
+            second: 'blue',
+            third: 'darkorchid',
+          },
           '& img': {
-            height: ['10px', '15px', '20px', '25px']
-          }
-        }
+            height: {
+              default: '10px',
+              first: '15px',
+              second: '20px',
+              third: '25px',
+            },
+          },
+        },
       })};
     `
     const tree = renderer
